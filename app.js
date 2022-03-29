@@ -23,12 +23,14 @@ const genres = [
 ];
 
 app.get("/api/genres", (req, res) => {
-  !genres ? res.status(404).send("No Courses Were found") : res.send(genres);
+  !genres ? res.status(400).send("No Genres were found") : res.send(genres);
 });
 
 app.get("/api/genres/:id", (req, res) => {
   const genre = genres.find((c) => c.id === parseInt(req.params.id));
-  !genre ? res.status(404).send("No Courses Was found by that id") : res.send(genre);
+  !genre
+    ? res.status(400).send("No Genre was found by that id")
+    : res.send(genre);
   res.send(genre);
 });
 
@@ -55,11 +57,14 @@ app.put("/api/genres/:id", (req, res) => {
 
 app.delete("/api/genres/:id", (req, res) => {
   const genre = genres.find((c) => c.id === parseInt(req.params.id));
+  if (!genre) {
+    res.status(400).send("No genre was found by that parameter");
+  } else {
+    const index = genres.indexOf(genre);
+    genres.splice(index, 1);
 
-  const index = genres.indexOf(genre);
-  genres.splice(index, 1);
-
-  res.send(genres);
+    res.send(genres);
+  }
 });
 
 app.listen(port, () => {
