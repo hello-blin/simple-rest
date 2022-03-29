@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const Joi = require("joi");
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
@@ -35,6 +36,18 @@ app.get("/api/genres/:id", (req, res) => {
 });
 
 app.post("/api/genres", (req, res) => {
+  const schema = {
+    name: Joi.string().min(3).required(),
+  };
+
+  const result = Joi.validate(req.body, schema);
+  console.log(result);
+
+  if (result.error) {
+    res.status(400).send(result.error.message);
+    return;
+  }
+
   const genre = {
     id: genres.length + 1,
     name: req.body.name,
