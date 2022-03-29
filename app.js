@@ -23,11 +23,12 @@ const genres = [
 ];
 
 app.get("/api/genres", (req, res) => {
-  res.send(genres);
+  !genres ? res.status(404).send("No Courses Were found") : res.send(genres);
 });
 
 app.get("/api/genres/:id", (req, res) => {
   const genre = genres.find((c) => c.id === parseInt(req.params.id));
+  !genre ? res.status(404).send("No Courses Was found by that id") : res.send(genre);
   res.send(genre);
 });
 
