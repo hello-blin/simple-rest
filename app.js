@@ -43,13 +43,22 @@ app.post("/api/genres", (req, res) => {
 
 app.put("/api/genres/:id", (req, res) => {
   const genre = genres.find((g) => g.id === parseInt(req.params.id));
-  if(!genre){
-      console.log(error.message);
-  }else{
-      genre.name = req.body.name
-      genre.likes = req.body.likes
-      res.send(genre)
+  if (!genre) {
+    console.log(error.message);
+  } else {
+    genre.name = req.body.name;
+    genre.likes = req.body.likes;
+    res.send(genre);
   }
+});
+
+app.delete("/api/genres/:id", (req, res) => {
+  const genre = genres.find((c) => c.id === parseInt(req.params.id));
+
+  const index = genres.indexOf(genre);
+  genres.splice(index, 1);
+
+  res.send(genres);
 });
 
 app.listen(port, () => {
