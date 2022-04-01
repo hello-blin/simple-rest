@@ -1,38 +1,24 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 
+const Genre = new mongoose.model(
+  "Genre",
+  new mongoose.Schema({
+    name: { type: String, required: true, minlength: 3, maxLength: 55 },
+  })
+);
 
-const genres = [
-    {
-      id: 1,
-      name: "Crime",
-      likes: 2000,
-    },
-    {
-      id: 2,
-      name: "Action",
-      likes: 10000,
-    },
-    {
-      id: 3,
-      name: "Romance",
-      likes: 4990,
-    },
-  ];
-
-router.get("/", (req, res) => {
-  !genres ? res.status(400).send("No Genres were found") : res.send(genres);
+router.get("/", async (req, res) => {
+  const genres = await Genre.find().sort("name");
+  res.send(genres);
 });
 
-router.get("/api/genres/:id", (req, res) => {
-  const genre = genres.find((c) => c.id === parseInt(req.params.id));
-  !genre
-    ? res.status(400).send("No Genre was found by that id")
-    : res.send(genre);
-  res.send(genre);
-});
+// router.get("/api/genres/:id", (req, res) => {
+//   const genre = ne
+// });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const schema = {
     name: Joi.string().min(3).required(),
   };
@@ -45,12 +31,10 @@ router.post("/", (req, res) => {
     return;
   }
 
-  const genre = {
-    id: genres.length + 1,
+  let genre = new Genre({
     name: req.body.name,
-    likes: req.body.likes,
-  };
-  genres.push(genre);
+  });
+  genre = await genre.save();
   res.send(genre);
 });
 
