@@ -51,7 +51,6 @@ router.put("/:id", async (req, res) => {
     res.status(400).send(result.error.message);
     return;
   }
-  genre.name = req.body.name;
   res.send(genre);
 });
 

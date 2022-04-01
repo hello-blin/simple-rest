@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const genresRoutes = require("./routes/genres");
+const customersRoutes = require("./routes/customers");
 const Joi = require("joi");
 const port = process.env.PORT || 5000;
 
@@ -14,12 +15,14 @@ mongoose
     console.log("Something went wrong, check configuration, ERROR=>", err)
   );
 
-  
-
 app.use(express.json());
 
 app.use("/api/genres", genresRoutes);
+app.use("/api/customers", customersRoutes);
 
 app.listen(port, () => {
   console.log(`Connected on ${port}`);
 });
+
+
+
