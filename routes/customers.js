@@ -2,13 +2,14 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const mongoose = require("mongoose");
+const Joi = require("joi");
 
 const Customer = mongoose.model(
   "Customer",
   new mongoose.Schema({
     isGold: Boolean,
-    name: { type: String, minLength: 5, maxLength: 55 },
-    phone: { type: Number, min: 9, max: 17 },
+    name: { type: String, minLength: 5, maxLength: 55, required: true },
+    phone: { type: String, minLength: 5, max: 55, required: true },
   })
 );
 
@@ -51,5 +52,14 @@ router.delete("/:id", async (req, res) => {
   let customer = await Customer.findByIdAndRemove(req.params.id);
   res.send(customer);
 });
+
+function validateCustomer(customer) {
+  const schema = {
+    name: Joi.string.min(5).required(),
+    name: Joi.string.min(5).max(55).required(),
+  };
+
+  return Joi.validate(customer, schema);
+}
 
 module.exports = router;
