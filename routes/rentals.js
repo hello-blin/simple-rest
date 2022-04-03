@@ -18,9 +18,28 @@ router.post("/", async (req, res) => {
   }
   const customer = await Customer.findById(req.params.id);
   if (!customer) return res.status(400).send("Invalid request for movie");
-  
+
   const movie = await Movie.findById(req.params.id);
-  if(!movie) return res.status(400).send("Invalid request for movie")
+  if (!movie) return res.status(400).send("Invalid request for movie");
+
+  let rental = new Rental({
+    customer: {
+      _id: customer._id,
+      name: customer.name,
+      phone: customer.phone,
+    },
+    movie: {
+      _id: movie._id,
+      title: movie.title,
+      dailyRentalRate: movie.dailyRentalRate,
+    },
+  });
+  rental = await rental.save();
+
+  movie.numberinStock--;
+  movie.save();
+
+  res.send(rental);
 });
 
 router("/:id", async (req, res) => {
