@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const app = express();
 const genresRoutes = require("./routes/genres");
 const customersRoutes = require("./routes/customers");
+const rentalRoutes = require("./routes/rentals");
+const moviesRoutes = require("./routes/movies");
 const Joi = require("joi");
 const port = process.env.PORT || 5000;
 
@@ -19,6 +21,7 @@ app.use(express.json());
 
 app.use("/api/genres", genresRoutes);
 app.use("/api/customers", customersRoutes);
+app.use("/api/rentals", rentalRoutes);
 
 app.listen(port, () => {
   console.log(`Connected on ${port}`);

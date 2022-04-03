@@ -11,6 +11,7 @@
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.3",
+    "fawn": "^2.1.5",
     "joi": "^13.1.1",
     "mongoose": "^6.2.9",
     "nodemon": "^2.0.15"

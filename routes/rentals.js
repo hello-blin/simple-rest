@@ -46,3 +46,5 @@ router("/:id", async (req, res) => {
   const rental = await Rentals.findById(req.params.id);
   res.send(rental);
 });
+
+module.exports = router;

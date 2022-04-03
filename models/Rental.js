@@ -41,6 +41,6 @@ function validateRental() {
 }
 
 
-exports.Rental = Rental;
+exports.Rental = rentalSchema;
 exports.validateRental = validateRental;
 
