@@ -10,7 +10,7 @@ const router = express.Router();
 Fawn.init('mongodb://localhost:27017/vidly');
 
 router.get("/", async (req, res) => {
-  const rentals = await Rentals.find().sort("-dateOut");
+  const rentals = await Rental.find().sort("-dateOut");
   res.send(rentals);
 });
 
@@ -49,7 +49,7 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const rental = await Rentals.findById(req.params.id);
+  const rental = await Rental.findById(req.params.id);
   res.send(rental);
 });
 

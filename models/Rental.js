@@ -37,7 +37,7 @@ function validateRental() {
     movieId: Joi.string().required(),
   };
 
-  return Joi.validate(rental, schema);
+  return Joi.validate(Rental, schema);
 }
 
 

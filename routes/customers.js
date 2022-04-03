@@ -16,7 +16,7 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { error } = validate(req.body);
+  const { error } = Joi.validate(req.body);
   if (error) return res.status(404).send(error.details[0].message);
   let customer = new Customer({
     isGold: req.body.isGold,
