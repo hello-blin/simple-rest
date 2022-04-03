@@ -28,16 +28,16 @@ const Movie = mongoose.model('Movies', new mongoose.Schema({
   }
 }));
 
-function validateMovie(movie) {
-  const schema = {
-    title: Joi.string().min(5).max(50).required(),
-    genreId: Joi.string().required(),
-    numberInStock: Joi.number().min(0).required(),
-    dailyRentalRate: Joi.number().min(0).required()
-  };
+// function validateMovie(movie) {
+//   const schema = {
+//     title: Joi.string().min(5).max(50).required(),
+//     genreId: Joi.objectId().required(),
+//     numberInStock: Joi.number().min(0).required(),
+//     dailyRentalRate: Joi.number().min(0).required()
+//   };
 
-  return Joi.validate(movie, schema);
-}
+//   return Joi.validate(movie, schema);
+// }
 
 exports.Movie = Movie; 
-exports.validate = validateMovie;
+// exports.validate = validateMovie;
