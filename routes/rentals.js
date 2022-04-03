@@ -1,13 +1,13 @@
 const express = require("express");
 const Joi = require("joi");
 const mongoose = require("mongoose");
-const fawn = require("fawn");
+const Fawn = require("fawn");
 const { Rental, validateRental } = require("../models/Rental");
 const { Movie } = require("../models/Movie");
 const { Customer } = require("../models/Customer");
 const router = express.Router();
 
-fawn.init(mongoose);
+Fawn.init('mongodb://localhost:27017/vidly');
 
 router.get("/", async (req, res) => {
   const rentals = await Rentals.find().sort("-dateOut");
@@ -41,14 +41,14 @@ router.post("/", async (req, res) => {
   try {
     new fawn.Task()
       .save("rentals", rental)
-      .update("movies", { _id: movie._id }, { $inc: { numberInStock: -1 } });
+      .update("movies", { _id: movie._id }, { $inc: { numberInStock: -1 } }).run();
     res.send(rental);
   } catch (err) {
     res.status(500).send("Something failed");
   }
 });
 
-router("/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const rental = await Rentals.findById(req.params.id);
   res.send(rental);
 });

@@ -5,7 +5,6 @@ const genresRoutes = require("./routes/genres");
 const customersRoutes = require("./routes/customers");
 const rentalRoutes = require("./routes/rentals");
 const moviesRoutes = require("./routes/movies");
-const Joi = require("joi");
 const port = process.env.PORT || 5000;
 
 mongoose
@@ -20,6 +19,7 @@ mongoose
 app.use(express.json());
 
 app.use("/api/genres", genresRoutes);
+app.use("/api/movies", moviesRoutes);
 app.use("/api/customers", customersRoutes);
 app.use("/api/rentals", rentalRoutes);
 
