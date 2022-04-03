@@ -38,9 +38,14 @@ router.post("/", async (req, res) => {
     },
   });
   rental = await rental.save();
-  new fawn.Task()
-    .save("rentals", rental)
-    .update("movies", { _id: movie._id }, { $inc: { numberInStock } });
+  try {
+    new fawn.Task()
+      .save("rentals", rental)
+      .update("movies", { _id: movie._id }, { $inc: { numberInStock: -1 } });
+    res.send(rental);
+  } catch (err) {
+    res.status(500).send("Something failed");
+  }
 });
 
 router("/:id", async (req, res) => {
