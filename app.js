@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const auth = require("./routes/auth")
 const app = express();
 const genresRoutes = require("./routes/genres");
 const customersRoutes = require("./routes/customers");
@@ -24,6 +25,8 @@ app.use("/api/movies", moviesRoutes);
 app.use("/api/customers", customersRoutes);
 app.use("/api/rentals", rentalRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/auth", auth);
+
 
 app.listen(port, () => {
   console.log(`Connected on ${port}`);
