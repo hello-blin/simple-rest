@@ -1,9 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const jwbt = require("jsonwebtoken");
+const config = require("config");
 const { User, validate } = require("../models/User");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
+const { response } = require("express");
 
 router.post("/", async (req, res) => {
   let { error } = validate(req.body);
@@ -17,7 +20,11 @@ router.post("/", async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
 
-  res.send(_.pick(user, ["_id", "name", "email"]));
+  const token = jwbt.sign({ _id: user._id }, config.get("jwtPrivateKey"));
+
+  res
+    .header("x-auth-token", token)
+    .send(_.pick(user, ["_id", "name", "email"]));
 });
 
 router.get("/", async (req, res) => {
