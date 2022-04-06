@@ -4,6 +4,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const { Customer, validateCustomer } = require("../models/Customer");
+const auth = require("../middleware/auth")
 
 router.get("/", async (req, res) => {
   let customers = await Customer.find();
@@ -15,7 +16,7 @@ router.get("/:id", async (req, res) => {
   res.send(customer);
 });
 
-router.post("/", async (req, res) => {
+router.post("/",auth, async (req, res) => {
   const { error } = Joi.validate(req.body);
   if (error) return res.status(404).send(error.details[0].message);
   let customer = new Customer({

@@ -26,6 +26,7 @@ mongoose
 
 app.use(express.json());
 
+
 app.use("/api/genres", genresRoutes);
 app.use("/api/movies", moviesRoutes);
 app.use("/api/customers", customersRoutes);

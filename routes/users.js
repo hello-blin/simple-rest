@@ -5,10 +5,11 @@ const config = require("config");
 const { User, validate } = require("../models/User");
 const router = express.Router();
 const bcrypt = require("bcrypt");
+const auth = require("../middleware/auth");
 const _ = require("lodash");
 const { response } = require("express");
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   let { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
